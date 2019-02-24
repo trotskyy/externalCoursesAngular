@@ -1,0 +1,8 @@
+<div class="panel panel-default" *ngFor="let taskList of taskLists">
+  <div class="panel-body" [routerLink]="['/taskList', taskList.id]">
+    <div class="panel-heading">{{taskList.listName}}</div>
+    <p>To Do: <span>{{taskList.todoTotal}}</span></p>
+    <p>In Progress: <span>{{taskList.inProgressTotal}}</span></p>
+    <p>Done: <span>{{taskList.doneTotal}}</span></p>
+  </div>
+</div>
