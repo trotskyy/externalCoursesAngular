@@ -1,7 +1,7 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
-import { delay, catchError, tap } from 'rxjs/operators';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
+import { delay, catchError, tap, map } from 'rxjs/operators';
 import { ErrorHandlingService } from './error-handling.service';
 import { User, UserLoginModel } from '../models';
 import { HttpClient } from '@angular/common/http';
@@ -34,14 +34,16 @@ export class AuthService {
     ]
   ];
 
-  private currentUser: User;
+  private currentUser$ = new BehaviorSubject<User>(null);
 
   constructor(private httpClient: HttpClient,
     private errorHandlingService: ErrorHandlingService) {
   }
 
-  public isSignedIn(): boolean {
-    return !!this.currentUser;
+  public isSignedIn(): Observable<boolean> {
+    return this.currentUser$.pipe(
+      map(currentUser => !!currentUser)
+    );
   }
 
   private findUser(loginModel: UserLoginModel): Observable<User> {
@@ -60,7 +62,7 @@ export class AuthService {
     return this.findUser(loginModel).pipe(
       delay(1500),
       tap(user => {
-        this.currentUser = user;
+        this.currentUser$.next(user);
       }),
       catchError(this.errorHandlingService.handleError)
     );
@@ -75,7 +77,7 @@ export class AuthService {
       delay(1500),
       tap(user => {
         this.mockedUsers.push([loginModel, user]);
-        this.currentUser = user;
+        this.currentUser$.next(user);
       }),
       catchError(this.errorHandlingService.handleError)
     );
@@ -85,15 +87,20 @@ export class AuthService {
     return of(null).pipe(
       delay(1500),
       tap(() => {
-        this.currentUser = null;
+        this.currentUser$.next(null);
       })
     )
   }
 
-  public getCurrentUser(): User {
-    if (!this.currentUser) {
-      return null;
-    }
-    return { ...this.currentUser };
+  public getCurrentUser(): Observable<User> {
+    return this.currentUser$.asObservable();
+  }
+
+  public validateLogin(login: string): Observable<boolean> {
+    const valid = !this.mockedUsers.some(userItem => userItem[0].login == login);
+    return of(valid).pipe(
+      delay(1500),
+      catchError(this.errorHandlingService.handleError)
+    );
   }
 }

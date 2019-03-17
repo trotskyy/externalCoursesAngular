@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../core/services';
+import { AuthService } from '../../core/services';
 
 @Component({
   selector: 'app-sign-in',
