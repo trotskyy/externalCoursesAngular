@@ -13,6 +13,7 @@ import { TaskComponent } from './task';
 import { CoreModule } from './core/core.module';
 import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SharedComponentsModule } from './shared-components/shared-components.mo
     NavBarComponent,
     DashboardComponent,
     TaskListComponent,
-    TaskComponent
+    TaskComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
