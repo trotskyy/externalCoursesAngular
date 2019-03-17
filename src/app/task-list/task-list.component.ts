@@ -27,7 +27,7 @@ export class TaskListComponent implements OnInit {
 
   getToDo() {
     return this.taskList.tasks
-      .filter(item => item.status === Status.ToDO)
+      .filter(item => item.status === Status.ToDo)
       .sort(this.sortDescPriority);
   }
 

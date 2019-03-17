@@ -1,30 +1,17 @@
 import { Injectable } from '@angular/core';
 import { TaskListSummary } from './task-list-summary.model';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
+  PATH = 'https://localhost:44357/taskList/summary';
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
   public getAll(): Observable<TaskListSummary[]> {
-    return of([
-      {
-        id: '1',
-        listName: 'Home',
-        doneTotal: 666,
-        inProgressTotal: 777,
-        todoTotal: 0
-      },
-      {
-        id: '2',
-        listName: 'Hom2 2 3e',
-        doneTotal: 666,
-        inProgressTotal: 777,
-        todoTotal: 0
-      }
-    ]);
+    return this.http.get<TaskListSummary[]>(this.PATH);
   }
 }

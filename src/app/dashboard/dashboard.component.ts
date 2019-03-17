@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { TaskListSummary } from './task-list-summary.model';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,9 +14,8 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-    this.dashboardService.getAll().pipe(
-      take(1)
-    ).subscribe(taskLists => {
+    this.dashboardService.getAll()
+      .subscribe(taskLists => {
       this.taskLists = taskLists;
     });
   }

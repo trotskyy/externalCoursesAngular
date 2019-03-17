@@ -1,52 +1,30 @@
 import { Injectable } from '@angular/core';
 import { TaskList } from './task-list.model';
-import { Priority, Status } from '../task';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskListService {
 
-  private static mockData: TaskList[] = [
-    {
-      id: '1',
-      name: 'Home',
-      tasks: [
-        {
-          id: 'task1',
-          name: 'Task 1',
-          priority: Priority.High,
-          status: Status.ToDO
-        },
-        {
-          id: 'task2',
-          name: 'Task 2',
-          priority: Priority.High,
-          status: Status.InProgress
-        },
-        {
-          id: 'task3',
-          name: 'Task 3',
-          priority: Priority.Low,
-          status: Status.Done
-        }
-      ]
-    }
-  ];
+  TASK_LIST_PATH = 'https://localhost:44357/taskList';
+  taskLists: TaskList[];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  public getAll(): Observable<TaskList[]> {
+    const all_path = '';
+    return this.http.get<TaskList[]>(this.TASK_LIST_PATH + all_path);
+  }
 
   public get(id: string): Observable<TaskList> {
-    console.log(id);
-    console.log(TaskListService.mockData);
-    console.log(TaskListService.mockData.find(taskList => taskList.id === id));
-    return of(TaskListService.mockData.find(taskList => taskList.id === id));
+    const path = `/${id}`;
+    return this.http.get<TaskList>(this.TASK_LIST_PATH + path);
   }
 
   public create(taskList: TaskList): Observable<TaskList> {
-    taskList.id = 'jadfubsdf';
-    TaskListService.mockData.push(taskList);
-    return of(taskList);
+    const body = { taskList };
+    return this.http.post<TaskList>(this.TASK_LIST_PATH, body );
   }
 }

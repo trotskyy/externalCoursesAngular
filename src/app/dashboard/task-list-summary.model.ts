@@ -1,7 +1,8 @@
 
 export interface TaskListSummary {
-    id: string;
-    listName: string;
+    taskListId: string;
+    name: string;
+    total: number;
     doneTotal: number;
     inProgressTotal: number;
     todoTotal: number;
