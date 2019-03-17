@@ -3,3 +3,9 @@ export enum Priority {
     Middle = 2,
     High = 3,
 }
+
+export const PriorityName = {
+    [Priority.High]: 'High',
+    [Priority.Middle]: 'Middle',
+    [Priority.Low]: 'Low',
+};

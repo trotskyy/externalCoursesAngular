@@ -8,7 +8,7 @@ export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'dashboards', component: DashboardComponent },
   { path: 'taskList/:id', component: TaskListComponent },
-  { path: 'task/:id', component: TaskComponent },
+  { path: 'task/:taskId', component: TaskComponent },
   //   { path: 'error/403', component: FeatureDisabledComponent },
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' }
   //   { path: '**', component: PageNotFoundComponent }

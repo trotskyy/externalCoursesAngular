@@ -1,3 +1,32 @@
-<p>
-  task-list works!
-</p>
+<div class="header">
+  <div class="taskList-name">{{ taskList.name }}</div>
+  <span class="align-center"></span>
+  <span class="example-spacer"></span>
+  <div class="taskList-add">
+    <mat-icon>add</mat-icon>
+    <span class="add-link">Add New Task</span>
+  </div>
+</div>
+
+<div class="container">
+  <mat-card class="colomn">
+    <div class="header">To Do:</div>
+    <div *ngFor="let task of getToDo()">
+      <app-task [task]="task"></app-task>
+    </div>
+  </mat-card>
+
+  <mat-card class="colomn">
+    <div class="header">In Progress:</div>
+    <div *ngFor="let task of getInProgress()">
+      <app-task [task]="task"></app-task>
+    </div>
+  </mat-card>
+
+  <mat-card class="colomn">
+    <div class="header">Done:</div>
+    <div *ngFor="let task of getDone()">
+      <app-task [task]="task"></app-task>
+    </div>
+  </mat-card>
+</div>

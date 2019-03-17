@@ -38,6 +38,9 @@ export class TaskListService {
   constructor() { }
 
   public get(id: string): Observable<TaskList> {
+    console.log(id);
+    console.log(TaskListService.mockData);
+    console.log(TaskListService.mockData.find(taskList => taskList.id === id));
     return of(TaskListService.mockData.find(taskList => taskList.id === id));
   }
 
