@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/services';
+import { AuthService } from '../core/services';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,7 +18,7 @@ export class SignInComponent {
       login: this.username,
       password: this.password
     }).subscribe(() => {
-     this.router.navigate(['dashboards']);      
+     this.router.navigate(['dashboards']);
     }, () => {
       alert('Invalid credentials');
     });

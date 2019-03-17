@@ -9,9 +9,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MaterialExportsModule } from './material-exports/material-exports.module';
-import { AuthModule } from './auth';
 import { TaskComponent } from './task';
 import { CoreModule } from './core/core.module';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -19,15 +19,15 @@ import { CoreModule } from './core/core.module';
     NavBarComponent,
     DashboardComponent,
     TaskListComponent,
-    TaskComponent
+    TaskComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialExportsModule,
     RouterModule.forRoot(routes),
-    CoreModule.forRoot(),    
-    AuthModule
+    CoreModule.forRoot()
   ],
   providers: [
   ],
