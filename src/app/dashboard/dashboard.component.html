@@ -1,10 +1,10 @@
 <div *ngFor="let taskList of taskLists">
   
-  <mat-card class="card" [routerLink]="['/taskList', taskList.id]">
-    <mat-card-title>{{taskList.listName}}</mat-card-title>
+  <mat-card class="card" [routerLink]="['/taskList', taskList.taskListId]">
+    <mat-card-title>{{taskList.name}}</mat-card-title>
 
     <mat-card-content>
-        <p>To Do: <span>{{taskList.todoTotal}}</span></p>
+        <p>To Do: <span>{{taskList.toDoTotal}}</span></p>
         <p>In Progress: <span>{{taskList.inProgressTotal}}</span></p>
         <p>Done: <span>{{taskList.doneTotal}}</span></p>
     </mat-card-content>

@@ -13,7 +13,11 @@ import {
   MatProgressSpinnerModule,
   MatGridListModule,
   MatDividerModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatDatepickerModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatNativeDateModule
 } from '@angular/material';
 
 @NgModule({
@@ -30,7 +34,11 @@ import {
     MatProgressSpinnerModule,
     MatGridListModule,
     MatDividerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatNativeDateModule
   ],
   exports: [
     CommonModule,
@@ -45,7 +53,11 @@ import {
     MatProgressSpinnerModule,
     MatGridListModule,
     MatDividerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatNativeDateModule
   ]
 })
 export class MaterialExportsModule {}

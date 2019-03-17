@@ -1,0 +1,46 @@
+<div class="container">
+  <div>
+    <mat-form-field>
+      <input 
+      matInput 
+      placeholder="Task Name"
+      [(ngModel)]="task.name"/>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <textarea matInput placeholder="Description" [(ngModel)]="task.description"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>      
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="task.date"/>
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-select placeholder="Priority" [(ngModel)]="task.priority">
+        <mat-option value="Priority.High">High</mat-option>
+        <mat-option value="Priority.Middle">Middle</mat-option>
+        <mat-option value="Priority.Low">Low</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-select placeholder="Status" [(ngModel)]="task.status">
+        <mat-option value="Status.ToDo">To Do</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button type="submit" mat-button (click)="onSaveCLick($event)">Save and Close</button>
+</div>

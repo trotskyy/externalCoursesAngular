@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskListService } from './task-list.service';
+import { TaskService } from '../task/task.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskList } from './task-list.model';
-import { take, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { Status } from '../task/status.emun';
 import { Task } from '../task/task.model';
+import { MatDialog } from '@angular/material';
+import { NewTaskComponent } from './new-task/new-task/new-task.component';
 
 @Component({
   selector: 'app-task-list',
@@ -12,17 +15,37 @@ import { Task } from '../task/task.model';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-
   taskList: TaskList;
 
-  constructor(private taskListService: TaskListService, private router: ActivatedRoute) {}
+  constructor(
+    private taskListService: TaskListService,
+    private taskService: TaskService,
+    private router: ActivatedRoute,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.taskListService.get(this.router.snapshot.params['id'])
+    this.taskListService
+      .get(this.router.snapshot.params['id'])
       .pipe(
-        filter(taskList => !!taskList),
-        take(1))
-      .subscribe(taskList => this.taskList = taskList);
+        filter(taskList => !!taskList)
+      )
+      .subscribe(taskList => (this.taskList = taskList));
+  }
+
+  openNewTaskDialog() {
+    const dialogRef = this.dialog.open(NewTaskComponent, {
+      height: '600px',
+      width: '800px',
+      data: this.taskList.taskListId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.taskService.create(result)
+        .subscribe((task: Task) => {
+          this.taskList.tasks.push(task);
+        });
+    });
   }
 
   getToDo() {

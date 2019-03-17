@@ -14,6 +14,7 @@ import { CoreModule } from './core/core.module';
 import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 import { HomeComponent } from './home/home.component';
+import { NewTaskComponent } from './task-list/new-task/new-task/new-task.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HomeComponent } from './home/home.component';
     DashboardComponent,
     TaskListComponent,
     TaskComponent,
-    HomeComponent
+    HomeComponent,
+    NewTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -31,13 +33,13 @@ import { HomeComponent } from './home/home.component';
     RouterModule.forRoot(routes),
     CoreModule.forRoot(),
     FormsModule,
-    CoreModule.forRoot(),    
+    CoreModule.forRoot(),
     SharedComponentsModule,
     // Routing module should always be in the end of imports!
-    RouterModule.forRoot(routes),    
+    RouterModule.forRoot(routes),
   ],
-  providers: [
-  ],
+  providers: [],
+  entryComponents: [NewTaskComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

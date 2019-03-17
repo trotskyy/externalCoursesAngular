@@ -5,5 +5,5 @@ export interface TaskListSummary {
     total: number;
     doneTotal: number;
     inProgressTotal: number;
-    todoTotal: number;
+    toDoTotal: number;
 }
