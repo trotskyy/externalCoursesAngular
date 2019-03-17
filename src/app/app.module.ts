@@ -11,8 +11,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MaterialExportsModule } from './material-exports/material-exports.module';
 import { TaskComponent } from './task';
 import { CoreModule } from './core/core.module';
-import { SignInComponent } from './sign-in/sign-in.component';
 import { FormsModule } from '@angular/forms';
+import { SharedComponentsModule } from './shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +20,7 @@ import { FormsModule } from '@angular/forms';
     NavBarComponent,
     DashboardComponent,
     TaskListComponent,
-    TaskComponent,
-    SignInComponent
+    TaskComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +28,11 @@ import { FormsModule } from '@angular/forms';
     MaterialExportsModule,
     RouterModule.forRoot(routes),
     CoreModule.forRoot(),
-    FormsModule
+    FormsModule,
+    CoreModule.forRoot(),    
+    SharedComponentsModule,
+    // Routing module should always be in the end of imports!
+    RouterModule.forRoot(routes),    
   ],
   providers: [
   ],

@@ -96,4 +96,12 @@ export class AuthService {
     }
     return { ...this.currentUser };
   }
+
+  public validateLogin(login: string): Observable<boolean> {
+    const valid = !this.mockedUsers.some(userItem => userItem[0].login == login);
+    return of(valid).pipe(
+      delay(1500),
+      catchError(this.errorHandlingService.handleError)
+    );
+  }
 }
