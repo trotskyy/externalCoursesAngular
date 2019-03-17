@@ -6,7 +6,7 @@ import { TaskComponent } from './task';
 
 export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboards', component: DashboardComponent },
   { path: 'taskList/:id', component: TaskListComponent },
   { path: 'task/:id', component: TaskComponent },
   //   { path: 'error/403', component: FeatureDisabledComponent },
