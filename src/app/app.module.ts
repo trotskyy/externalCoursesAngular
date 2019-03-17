@@ -11,6 +11,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MaterialExportsModule } from './material-exports/material-exports.module';
 import { AuthModule } from './auth';
 import { TaskComponent } from './task';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,11 @@ import { TaskComponent } from './task';
     BrowserAnimationsModule,
     MaterialExportsModule,
     RouterModule.forRoot(routes),
+    CoreModule.forRoot(),    
     AuthModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

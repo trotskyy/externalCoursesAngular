@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,13 +11,16 @@ export class SignInComponent {
   username: string;
   password: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   login(): void {
-    if (this.username === 'admin' && this.password === 'admin') {
-     this.router.navigate(['user']);
-    } else {
+    this.authService.signIn({
+      login: this.username,
+      password: this.password
+    }).subscribe(() => {
+     this.router.navigate(['dashboards']);      
+    }, () => {
       alert('Invalid credentials');
-    }
+    });
   }
 }
