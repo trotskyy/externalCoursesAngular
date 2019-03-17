@@ -12,6 +12,7 @@ import { MaterialExportsModule } from './material-exports/material-exports.modul
 import { TaskComponent } from './task';
 import { CoreModule } from './core/core.module';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
     BrowserAnimationsModule,
     MaterialExportsModule,
     RouterModule.forRoot(routes),
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
+    FormsModule
   ],
   providers: [
   ],
