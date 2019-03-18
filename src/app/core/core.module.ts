@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService, ErrorHandlingService } from './services';
+import { AuthService, ErrorHandlingService, JwtService } from './services';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -15,7 +15,9 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         AuthService,
-        ErrorHandlingService
+        ErrorHandlingService,
+        JwtService,
+        { provide: Window, useValue: window }
       ]
     }
   }

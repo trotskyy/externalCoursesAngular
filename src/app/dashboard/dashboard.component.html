@@ -1,13 +1,33 @@
-<div *ngFor="let taskList of taskLists">
+
+<ng-container *ngIf="taskLists && taskLists.length; then taskListsTemplate else noTaskListsTemplate">
   
-  <mat-card class="card" [routerLink]="['/taskList', taskList.taskListId]">
-    <mat-card-title>{{taskList.name}}</mat-card-title>
+</ng-container>
+<ng-template #taskListsTemplate>
+  <div>
+    <div *ngFor="let taskList of taskLists">
+    
+      <mat-card class="card" [routerLink]="['/taskList', taskList.taskListId]">
+        <mat-card-title>{{taskList.name}}</mat-card-title>
+    
+        <mat-card-content>
+            <p>To Do: <span>{{taskList.toDoTotal}}</span></p>
+            <p>In Progress: <span>{{taskList.inProgressTotal}}</span></p>
+            <p>Done: <span>{{taskList.doneTotal}}</span></p>
+        </mat-card-content>
+    
+      </mat-card>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noTaskLists>
+  <div>
+    <p>You have no taskLists yet</p>
+    <button type="button" class="btn btn-primary" (click)="createNewList()">Create new task list</button>
+  </div>
+</ng-template>
 
-    <mat-card-content>
-        <p>To Do: <span>{{taskList.toDoTotal}}</span></p>
-        <p>In Progress: <span>{{taskList.inProgressTotal}}</span></p>
-        <p>Done: <span>{{taskList.doneTotal}}</span></p>
-    </mat-card-content>
-
-  </mat-card>
+<div *ngIf="creatingTaskList" class="create-tasklist-popup">
+  <div class="content">
+    <p>dfsgsdg</p>
+  </div>
 </div>

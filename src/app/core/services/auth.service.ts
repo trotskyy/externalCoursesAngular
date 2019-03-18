@@ -5,38 +5,15 @@ import { delay, catchError, tap, map } from 'rxjs/operators';
 import { ErrorHandlingService } from './error-handling.service';
 import { User, UserLoginModel } from '../models';
 import { HttpClient } from '@angular/common/http';
+import { JwtService } from './jwt.service';
 
 @Injectable()
 export class AuthService {
 
-  private mockedUsers: Array<[UserLoginModel, User]> = [
-    [ 
-      <UserLoginModel>{
-        login: 'user1',
-        password: 'qwerty'
-      },
-      <User>{
-        id: 123,
-        firstName: 'Vasya',
-        lastName: 'Pupkin',
-      }
-    ],
-    [ 
-      <UserLoginModel>{
-        login: 'user2',
-        password: '666'
-      },
-      <User>{
-        id: 123,
-        firstName: 'Vasya',
-        lastName: 'Pupkin',
-      }
-    ]
-  ];
-
   private currentUser$ = new BehaviorSubject<User>(null);
 
   constructor(private httpClient: HttpClient,
+    private jwtService: JwtService,
     private errorHandlingService: ErrorHandlingService) {
   }
 
@@ -46,38 +23,31 @@ export class AuthService {
     );
   }
 
-  private findUser(loginModel: UserLoginModel): Observable<User> {
-    const userItem = this.mockedUsers
-      .find(userItem => userItem[0].login === loginModel.login
-        && userItem[0].password === loginModel.password);
-    return !!userItem
-      ? of(userItem[1])
-      : throwError({
-        status: 403
-      })
-  }
-
+  // login : new_user2
+  // pass: 666
   public signIn(loginModel: UserLoginModel): Observable<User> {
-    
-    return this.findUser(loginModel).pipe(
-      delay(1500),
-      tap(user => {
-        this.currentUser$.next(user);
+    const PATH = 'https://localhost:44357/api/auth/sign-in';
+
+    return this.httpClient.post<any>(PATH, loginModel).pipe(
+      tap(({user, token}) => {
+        this.jwtService.persistToken(token);
+        this.currentUser$.next(user as User);
       }),
       catchError(this.errorHandlingService.handleError)
     );
   }
 
   public singUp(loginModel: UserLoginModel, firstName: string, lastName: string): Observable<User> {
-    return of(<User>{
-      id: 456,
+    const PATH = 'https://localhost:44357/api/auth/sign-up';
+
+    return this.httpClient.post<any>(PATH, {
+      signInModel: loginModel,
       firstName: firstName,
-      lastName: lastName,
+      lastName: lastName
     }).pipe(
-      delay(1500),
-      tap(user => {
-        this.mockedUsers.push([loginModel, user]);
-        this.currentUser$.next(user);
+      tap(({user, token}) => {
+        this.jwtService.persistToken(token);
+        this.currentUser$.next(user as User);
       }),
       catchError(this.errorHandlingService.handleError)
     );
@@ -88,6 +58,7 @@ export class AuthService {
       delay(1500),
       tap(() => {
         this.currentUser$.next(null);
+        this.jwtService.clearToken();
       })
     )
   }
@@ -96,11 +67,11 @@ export class AuthService {
     return this.currentUser$.asObservable();
   }
 
-  public validateLogin(login: string): Observable<boolean> {
-    const valid = !this.mockedUsers.some(userItem => userItem[0].login == login);
-    return of(valid).pipe(
-      delay(1500),
-      catchError(this.errorHandlingService.handleError)
-    );
-  }
+  // public validateLogin(login: string): Observable<boolean> {
+  //   const valid = !this.mockedUsers.some(userItem => userItem[0].login == login);
+  //   return of(valid).pipe(
+  //     delay(1500),
+  //     catchError(this.errorHandlingService.handleError)
+  //   );
+  // }
 }

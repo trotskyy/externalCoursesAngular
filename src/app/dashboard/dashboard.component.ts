@@ -10,6 +10,7 @@ import { TaskListSummary } from './task-list-summary.model';
 export class DashboardComponent implements OnInit {
 
   public taskLists: TaskListSummary[];
+  public creatingTaskList: boolean;
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -18,5 +19,9 @@ export class DashboardComponent implements OnInit {
       .subscribe(taskLists => {
       this.taskLists = taskLists;
     });
+  }
+
+  public createNewList() {
+    this.creatingTaskList = true;
   }
 }
