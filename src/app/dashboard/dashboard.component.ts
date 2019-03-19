@@ -27,13 +27,22 @@ export class DashboardComponent implements OnInit {
       .subscribe(taskList => {
         const summary = <TaskListSummary> {
           taskListId: taskList.id,
-          name: taskList.name,
-          total: 0,
-          doneTotal: 0,
-          inProgressTotal: 0,
-          toDoTotal: 0,
+          listName: taskList.name,
+          doneCount: 0,
+          inProgressCount: 0,
+          toDoCount: 0,
         };
         this.taskLists.push(summary);
       })
+  }
+
+  // pay at attention at $event object passed in html
+  public deleteTaskList(event: Event, taskList: TaskListSummary): void {
+    // to not redirect to /task-list/:id
+    event.stopPropagation();
+
+    this.dashboardService.delete(taskList.taskListId).subscribe(() => {
+      this.taskLists = this.taskLists.filter(tl => tl !== taskList);
+    });
   }
 }

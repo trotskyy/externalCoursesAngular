@@ -27,4 +27,11 @@ export class DashboardService {
         catchError(this.errorHandlingSerivce.handleError)
       );
   }
+
+  public delete(taskListId: number): Observable<{}> {
+    return this.http.delete(`https://localhost:44357/api/task-list/${taskListId}`)
+      .pipe(
+        catchError(this.errorHandlingSerivce.handleError)
+      );
+  }
 }
