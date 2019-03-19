@@ -1,7 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService, ErrorHandlingService, JwtService } from './services';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors';
 
 @NgModule({
   imports: [
@@ -17,7 +18,12 @@ export class CoreModule {
         AuthService,
         ErrorHandlingService,
         JwtService,
-        { provide: Window, useValue: window }
+        { provide: Window, useValue: window },
+        {
+           provide: HTTP_INTERCEPTORS,
+           useClass: TokenInterceptor,
+           multi: true
+        }
       ]
     }
   }

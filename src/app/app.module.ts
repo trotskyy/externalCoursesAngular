@@ -30,8 +30,6 @@ import { NewTaskComponent } from './task-list/new-task/new-task/new-task.compone
     BrowserModule,
     BrowserAnimationsModule,
     MaterialExportsModule,
-    RouterModule.forRoot(routes),
-    CoreModule.forRoot(),
     FormsModule,
     CoreModule.forRoot(),
     SharedComponentsModule,

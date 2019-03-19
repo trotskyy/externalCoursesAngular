@@ -25,19 +25,25 @@ export class SignUpComponent {
       return;
     }
 
-    this.authService.validateLogin(this.login).pipe(
-      tap(isValid => {
-        if (!isValid) {
-          alert('user with such login already exists');
-        }
-      }),
-      filter(isValid => isValid),
-      mergeMap(_ =>
-        this.authService.singUp(<UserLoginModel> { login: this.login, password: this.password },
-          this.firstName, this.lastName))
-    ).subscribe(_ => {
+    this.authService.singUp(<UserLoginModel> { login: this.login, password: this.password },
+          this.firstName, this.lastName)
+    .subscribe(_ => {
       this.router.navigate(['dashboards'])
     });
+
+    // this.authService.validateLogin(this.login).pipe(
+    //   tap(isValid => {
+    //     if (!isValid) {
+    //       alert('user with such login already exists');
+    //     }
+    //   }),
+    //   filter(isValid => isValid),
+    //   mergeMap(_ =>
+    //     this.authService.singUp(<UserLoginModel> { login: this.login, password: this.password },
+    //       this.firstName, this.lastName))
+    // ).subscribe(_ => {
+    //   this.router.navigate(['dashboards'])
+    // });
   }
 
 }

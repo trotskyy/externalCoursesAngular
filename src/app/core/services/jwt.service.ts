@@ -14,6 +14,7 @@ export class JwtService {
   public persistToken(jwtBase64String: string): void {
     this.token.raw = jwtBase64String;
     this.token.payload = this.createFromString(jwtBase64String);
+    console.log(this.token);
   }
 
   public isExpired(): boolean {
@@ -21,6 +22,10 @@ export class JwtService {
       return true;
     }
     return Date.now() > this.token.payload.expirationDateMs
+  }
+
+  public getRawToken(): string {
+    return this.token.raw;
   }
 
   public clearToken(): void {
@@ -36,7 +41,9 @@ export class JwtService {
     return <JwtPayload> {
       subjectId: payloadObj.sub,
       issuedAtMs: +payloadObj.iat * 1000,
-      expirationDateMs: +payloadObj.exp * 1000
+      expirationDateMs: +payloadObj.exp * 1000,
+      issuer: payloadObj.iss,
+      audience: payloadObj.aud
     };
   }
 }

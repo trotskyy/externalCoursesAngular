@@ -37,7 +37,7 @@ export class TaskListComponent implements OnInit {
     const dialogRef = this.dialog.open(NewTaskComponent, {
       height: '600px',
       width: '800px',
-      data: this.taskList.taskListId
+      data: this.taskList.id
     });
 
     dialogRef.afterClosed().subscribe(result => {

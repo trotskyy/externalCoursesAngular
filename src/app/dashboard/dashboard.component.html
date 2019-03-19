@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="taskLists && taskLists.length; then taskListsTemplate else noTaskListsTemplate">
+<ng-container *ngIf="taskLists && taskLists.length; then taskListsTemplate; else noTaskListsTemplate">
   
 </ng-container>
 <ng-template #taskListsTemplate>
@@ -19,15 +19,39 @@
     </div>
   </div>
 </ng-template>
-<ng-template #noTaskLists>
+<ng-template #noTaskListsTemplate>
   <div>
     <p>You have no taskLists yet</p>
-    <button type="button" class="btn btn-primary" (click)="createNewList()">Create new task list</button>
+    <button type="button"
+      class="btn btn-info"
+      data-toggle="modal"
+      data-target="#myModal">Create new task list</button>
   </div>
 </ng-template>
 
-<div *ngIf="creatingTaskList" class="create-tasklist-popup">
-  <div class="content">
-    <p>dfsgsdg</p>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add task list</h4>
+      </div>
+      <div class="modal-body">
+        <label for="newTaskListName">Task list name</label>
+        <input class="form-control"
+          type="text"
+          name="newTaskListName"
+          [(ngModel)]="newTaskListName"
+          placeholder="Enter name for new list"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+        <button type="button" (click)="createNewList()" class="btn btn-success" data-dismiss="modal">Save</button>
+        
+      </div>
+    </div>
+
   </div>
 </div>
