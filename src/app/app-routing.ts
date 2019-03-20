@@ -10,7 +10,7 @@ export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'dashboards', component: DashboardComponent },
-  { 
+  {
     // using resolver to prevent component loading until data was loaded
     path: 'taskList/:id',
     component: TaskListComponent,

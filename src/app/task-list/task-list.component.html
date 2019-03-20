@@ -4,29 +4,55 @@
   <span class="example-spacer"></span>
   <div class="taskList-add">
     <mat-icon>add</mat-icon>
-    <button mat-raised-button (click)="openNewTaskDialog()">Add New Task</button>
+    <button mat-raised-button (click)="openNewTaskDialog()">
+      Add New Task
+    </button>
   </div>
 </div>
 
-<div class="container">
-  <mat-card class="colomn">
-    <div class="header">To Do:</div>
-    <div *ngFor="let task of getToDo()">
+<div class="container" cdkDropListGroup>
+  <div
+    class="colomn"
+    id="1"
+    cdkDropList
+    [cdkDropListData]="toDo"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <mat-card>
+      <div class="header">To Do:</div>
+    </mat-card>
+    <div cdkDrag [cdkDragData]="task" *ngFor="let task of toDo">
       <app-task [task]="task"></app-task>
     </div>
-  </mat-card>
+  </div>
 
-  <mat-card class="colomn">
-    <div class="header">In Progress:</div>
-    <div *ngFor="let task of getInProgress()">
+  <div
+    class="colomn"
+    id="2"
+    cdkDropList
+    [cdkDropListData]="inProgress"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <mat-card>
+      <div class="header">In Progress:</div>
+    </mat-card>
+    <div cdkDrag [cdkDragData]="task" *ngFor="let task of inProgress">
       <app-task [task]="task"></app-task>
     </div>
-  </mat-card>
+  </div>
 
-  <mat-card class="colomn">
-    <div class="header">Done:</div>
-    <div *ngFor="let task of getDone()">
-      <app-task [task]="task"></app-task>
-    </div>
-  </mat-card>
-</div>
+  <div
+    class="colomn"
+    id="3"
+    cdkDropList
+    [cdkDropListData]="done"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <mat-card>
+      <div class="header">Done:</div>      
+    </mat-card>
+      <div cdkDrag [cdkDragData]="task" *ngFor="let task of done">
+        <app-task [task]="task"></app-task>
+      </div>
+  </div>
+</div> 

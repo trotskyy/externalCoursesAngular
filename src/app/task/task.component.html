@@ -1,16 +1,13 @@
-<mat-accordion>
-  <mat-expansion-panel>
+<div>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Name: {{ task.name }} </mat-panel-title>
+      </mat-expansion-panel-header>
 
-  <mat-expansion-panel-header>
-      <mat-panel-title>
-        Name: {{ task.name }}
-      </mat-panel-title>      
-    </mat-expansion-panel-header>
-
-
-    <div>Description: {{ task.description }}</div>
-    <div>Priority: {{ Priority[task.priority] }}</div>
-    <div>Date: {{ task.date | date: 'short' }}</div>
-
-  </mat-expansion-panel>
-</mat-accordion>
+      <div>Description: {{ task.description }}</div>
+      <div>Priority: {{ Priority[task.priority] }}</div>
+      <div>Date: {{ task.date | date: 'short' }}</div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

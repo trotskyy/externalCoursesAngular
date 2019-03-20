@@ -8,6 +8,7 @@ import { Status } from '../task/status.emun';
 import { Task } from '../task/task.model';
 import { MatDialog } from '@angular/material';
 import { NewTaskComponent } from './new-task/new-task/new-task.component';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-list',
@@ -17,6 +18,10 @@ import { NewTaskComponent } from './new-task/new-task/new-task.component';
 export class TaskListComponent implements OnInit {
 
   public taskList: TaskList;
+
+  toDo: Task[] = [];
+  inProgress: Task[] = [];
+  done: Task[] = [];
 
   constructor(
     private taskListService: TaskListService,
@@ -37,6 +42,10 @@ export class TaskListComponent implements OnInit {
     //     this.taskList = taskList;
     //     console.log(taskList);
     //   });
+
+    this.toDo = this.getToDo();
+    this.inProgress = this.getInProgress();
+    this.done = this.getDone();
   }
 
   openNewTaskDialog() {
@@ -54,22 +63,43 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  getToDo() {
-    return this.taskList.tasks
+  drop(event: CdkDragDrop<Task[]>) {
+    console.log(event);
+    const item = event.item.data;
+    const status = +event.container.id;
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+  }
+
+  getToDo(): Task[] {
+    const arr = this.taskList.tasks
       .filter(item => item.status === Status.ToDo)
       .sort(this.sortDescPriority);
+      return arr ? arr : [];
   }
 
-  getInProgress() {
-    return this.taskList.tasks
+  getInProgress(): Task[] {
+    const arr = this.taskList.tasks
       .filter(item => item.status === Status.InProgress)
       .sort(this.sortDescPriority);
+    return arr ? arr : [];
   }
 
-  getDone() {
-    return this.taskList.tasks
+  getDone(): Task[] {
+    const arr =  this.taskList.tasks
       .filter(item => item.status === Status.Done)
       .sort(this.sortDescPriority);
+      return arr ? arr : [];
+  }
+
+  updateStatus(task: Task, status: Status) {
+
   }
 
   private sortDescPriority(a: Task, b: Task) {

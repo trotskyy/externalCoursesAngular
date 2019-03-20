@@ -20,6 +20,8 @@ import {
   MatNativeDateModule
 } from '@angular/material';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import {
     MatDatepickerModule,
     MatOptionModule,
     MatSelectModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    DragDropModule
   ],
   exports: [
     CommonModule,
@@ -57,7 +60,8 @@ import {
     MatDatepickerModule,
     MatOptionModule,
     MatSelectModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    DragDropModule
   ]
 })
 export class MaterialExportsModule {}
