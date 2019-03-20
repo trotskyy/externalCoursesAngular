@@ -15,7 +15,8 @@ import { NewTaskComponent } from './new-task/new-task/new-task.component';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  taskList: TaskList;
+  
+  public taskList: TaskList;
 
   constructor(
     private taskListService: TaskListService,
@@ -30,7 +31,10 @@ export class TaskListComponent implements OnInit {
       .pipe(
         filter(taskList => !!taskList)
       )
-      .subscribe(taskList => (this.taskList = taskList));
+      .subscribe(taskList => {
+        this.taskList = taskList;
+        console.log(taskList);
+      });
   }
 
   openNewTaskDialog() {
