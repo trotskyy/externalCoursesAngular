@@ -2,7 +2,7 @@ import { Priority } from './priority.emun';
 import { Status } from './status.emun';
 
 export interface Task {
-    taskId: string;
+    id: number;
     taskListId: string;
     name: string;
     description: string;

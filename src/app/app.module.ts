@@ -14,8 +14,8 @@ import { CoreModule } from './core/core.module';
 import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 import { HomeComponent } from './home/home.component';
-import { NewTaskComponent } from './task-list/new-task/new-task/new-task.component';
 import { TaskListResolver } from './task-list/task-list.resolver';
+import { EditTaskComponent } from './task-list/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { TaskListResolver } from './task-list/task-list.resolver';
     TaskListComponent,
     TaskComponent,
     HomeComponent,
-    NewTaskComponent
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +40,7 @@ import { TaskListResolver } from './task-list/task-list.resolver';
   providers: [
     TaskListResolver
   ],
-  entryComponents: [NewTaskComponent],
+  entryComponents: [EditTaskComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

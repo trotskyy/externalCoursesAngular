@@ -23,9 +23,9 @@
         </mat-card-title>
         <hr>
         <mat-card-content>
-            <p>To Do: <span>{{taskList.doneCount}}</span></p>
-            <p>In Progress: <span>{{taskList.inProgressCount}}</span></p>
-            <p>Done: <span>{{taskList.toDoCount}}</span></p>
+            <p>To Do: <span>{{taskList.toDoCount || 0}}</span></p>
+            <p>In Progress: <span>{{taskList.inProgressCount || 0}}</span></p>
+            <p>Done: <span>{{taskList.doneCount || 0}}</span></p>
         </mat-card-content>
       </mat-card>
     </div>

@@ -22,7 +22,9 @@
       <div class="header">To Do:</div>
     </mat-card>
     <div cdkDrag [cdkDragData]="task" *ngFor="let task of toDo">
-      <app-task [task]="task"></app-task>
+      <app-task [task]="task"
+      (editTask)="onEditTask($event)"
+      (deleteTask)="onDeleteTask($event)"></app-task>
     </div>
   </div>
 
@@ -37,7 +39,9 @@
       <div class="header">In Progress:</div>
     </mat-card>
     <div cdkDrag [cdkDragData]="task" *ngFor="let task of inProgress">
-      <app-task [task]="task"></app-task>
+      <app-task [task]="task"
+      (editTask)="onEditTask($event)"
+      (deleteTask)="onDeleteTask($event)"></app-task>
     </div>
   </div>
 
@@ -52,7 +56,9 @@
       <div class="header">Done:</div>      
     </mat-card>
       <div cdkDrag [cdkDragData]="task" *ngFor="let task of done">
-        <app-task [task]="task"></app-task>
+        <app-task [task]="task"
+        (editTask)="onEditTask($event)"
+        (deleteTask)="onDeleteTask($event)"></app-task>
       </div>
   </div>
 </div> 
