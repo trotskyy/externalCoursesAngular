@@ -3,11 +3,12 @@ import { TaskListService } from './task-list.service';
 import { TaskService } from '../task/task.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskList } from './task-list.model';
-import { filter } from 'rxjs/operators';
+import { filter, mergeMap } from 'rxjs/operators';
 import { Status } from '../task/status.emun';
 import { Task } from '../task/task.model';
 import { MatDialog } from '@angular/material';
-import { NewTaskComponent } from './new-task/new-task/new-task.component';
+import { EditTaskComponent } from 'src/app/task-list/edit-task/edit-task.component';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
@@ -29,22 +30,52 @@ export class TaskListComponent implements OnInit {
   }
 
   public openNewTaskDialog(): void {
-    const dialogRef = this.dialog.open(NewTaskComponent, {
+    const dialogRef = this.dialog.open(EditTaskComponent, {
       height: '600px',
       width: '800px',
-      data: this.taskList.id
+      data: { taskListId: this.taskList.id, status: Status.ToDo }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.taskService.create(result)
-        .subscribe((task: Task) => {
-          this.taskList.tasks.push(task);
-        });
+    // pay attention! subscribe inside subscribe. this is wrong
+
+    // dialogRef.afterClosed().pipe(
+    //   filter(response => !!response)
+    // ).subscribe(response => {
+    //   this.taskService.create(response as Task)
+    //     .subscribe((task: Task) => {
+    //       this.taskList.tasks.push(task);
+    //     });
+    // });
+
+    // use mergeMap() instead
+    dialogRef.afterClosed().pipe(
+      filter(response => !!response),
+      mergeMap(response => this.taskService.create(response as Task))
+    ).subscribe(task => {
+      this.taskList.tasks.push(task);
     });
   }
 
   public onEditTask(task: Task): void {
+    const dialogRef = this.dialog.open(EditTaskComponent, {
+      height: '600px',
+      width: '800px',
+      data: { ...task }
+    });
 
+    dialogRef.afterClosed().pipe(
+      filter(response => !!response),
+      mergeMap(response => this.taskService.update((<Task>response).id, response as Task).pipe(
+        mergeMap(_ => of(response))
+      ))
+    ).subscribe(response => {
+      const task = response as Task;
+      const updatedTaskIndex = this.taskList.tasks.findIndex(t => t.id === task.id);
+
+      this.taskList.tasks[updatedTaskIndex] = task;
+      console.log(task);
+      console.log('edit');
+    });
   }
 
   public onDeleteTask(task: Task): void {
