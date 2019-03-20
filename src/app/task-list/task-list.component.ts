@@ -26,15 +26,17 @@ export class TaskListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.taskListService
-      .get(this.router.snapshot.params['id'])
-      .pipe(
-        filter(taskList => !!taskList)
-      )
-      .subscribe(taskList => {
-        this.taskList = taskList;
-        console.log(taskList);
-      });
+    this.taskList = this.router.snapshot.data['taskList'];
+
+    // this.taskListService
+    //   .get(this.router.snapshot.params['id'])
+    //   .pipe(
+    //     filter(taskList => !!taskList)
+    //   )
+    //   .subscribe(taskList => {
+    //     this.taskList = taskList;
+    //     console.log(taskList);
+    //   });
   }
 
   openNewTaskDialog() {
