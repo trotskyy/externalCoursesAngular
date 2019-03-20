@@ -18,8 +18,7 @@ export class TaskListComponent implements OnInit {
 
   public taskList: TaskList;
 
-  constructor(
-    private taskListService: TaskListService,
+  constructor(private taskListService: TaskListService,
     private taskService: TaskService,
     private router: ActivatedRoute,
     private dialog: MatDialog
@@ -27,19 +26,9 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     this.taskList = this.router.snapshot.data['taskList'];
-
-    // this.taskListService
-    //   .get(this.router.snapshot.params['id'])
-    //   .pipe(
-    //     filter(taskList => !!taskList)
-    //   )
-    //   .subscribe(taskList => {
-    //     this.taskList = taskList;
-    //     console.log(taskList);
-    //   });
   }
 
-  openNewTaskDialog() {
+  public openNewTaskDialog(): void {
     const dialogRef = this.dialog.open(NewTaskComponent, {
       height: '600px',
       width: '800px',
@@ -54,25 +43,39 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  getToDo() {
+  public onEditTask(task: Task): void {
+
+  }
+
+  public onDeleteTask(task: Task): void {
+    // remove subscribe and see that request does not occur!
+    this.taskService.delete(task.id).subscribe(_ => {
+      const tasks = this.taskList.tasks;
+      const deletedTaskIndex = tasks.findIndex(t => t === task);
+
+      this.taskList.tasks = tasks.splice(0, deletedTaskIndex);
+    });
+  }
+
+  public getToDo(): Task[] {
     return this.taskList.tasks
       .filter(item => item.status === Status.ToDo)
       .sort(this.sortDescPriority);
   }
 
-  getInProgress() {
+  public getInProgress(): Task[] {
     return this.taskList.tasks
       .filter(item => item.status === Status.InProgress)
       .sort(this.sortDescPriority);
   }
 
-  getDone() {
+  public getDone(): Task[] {
     return this.taskList.tasks
       .filter(item => item.status === Status.Done)
       .sort(this.sortDescPriority);
   }
 
-  private sortDescPriority(a: Task, b: Task) {
+  private sortDescPriority(a: Task, b: Task): number {
     return b.priority - a.priority;
   }
 }

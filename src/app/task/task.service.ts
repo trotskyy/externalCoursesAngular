@@ -27,8 +27,12 @@ export class TaskService {
     return this.http.post<Task>(this.TASK_LIST_PATH, body );
   }
 
-  public delete(taskId: string): Observable<Task> {
+  public delete(taskId: number): Observable<Task> {
     const path = `/${taskId}`;
     return this.http.delete<Task>(this.TASK_LIST_PATH + path);
+  }
+
+  public update(taskId: number, task: Task): Observable<{}> {
+    return this.http.put(this.TASK_LIST_PATH + `/${taskId}`, task);
   }
 }

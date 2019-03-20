@@ -12,7 +12,9 @@
   <mat-card class="colomn">
     <div class="header">To Do:</div>
     <div *ngFor="let task of getToDo()">
-      <app-task [task]="task"></app-task>
+      <app-task [task]="task" 
+        (editTask)="onEditTask($event)"
+        (deleteTask)="onDeleteTask($event)"></app-task>
     </div>
   </mat-card>
 
