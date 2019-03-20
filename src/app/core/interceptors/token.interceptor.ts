@@ -1,7 +1,7 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { JwtService } from "../services";
-import { Injectable } from "@angular/core";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { JwtService } from '../services';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -10,7 +10,7 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        
+
         req = req.clone({
             setHeaders: {
                 Authorization: `Bearer ${this.tokenService.getRawToken()}`

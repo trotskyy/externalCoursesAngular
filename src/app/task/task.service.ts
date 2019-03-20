@@ -8,23 +8,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TaskService {
 
-  TASK_LIST_PATH = 'https://localhost:44357';
+  TASK_LIST_PATH = 'https://localhost:44357/api/task';
 
   constructor(private http: HttpClient) { }
 
   public getAll(taskListId: string): Observable<Task[]> {
-    const all_path = `/taskList/${taskListId}/task`;
+    const all_path = `/list-id?taskListId=${taskListId}`;
     return this.http.get<Task[]>(this.TASK_LIST_PATH + all_path);
   }
 
-  public get(taskListId: string, taskId: string): Observable<Task> {
-    const path = `/taskList/${taskListId}/task/${taskId}`;
+  public get(taskId: string): Observable<Task> {
+    const path = `/${taskId}`;
     return this.http.get<Task>(this.TASK_LIST_PATH + path);
   }
 
   public create(task: Task): Observable<Task> {
-    const path = `/taskList/${task.taskListId}/task`;
-    const body = { task };
-    return this.http.post<Task>(this.TASK_LIST_PATH + path, body );
+    const body = {...task, status: <number>task.status, priority: <number>task.priority };
+    return this.http.post<Task>(this.TASK_LIST_PATH, body );
+  }
+
+  public delete(taskId: string): Observable<Task> {
+    const path = `/${taskId}`;
+    return this.http.delete<Task>(this.TASK_LIST_PATH + path);
   }
 }

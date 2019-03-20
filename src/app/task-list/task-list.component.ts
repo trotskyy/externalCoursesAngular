@@ -15,7 +15,7 @@ import { NewTaskComponent } from './new-task/new-task/new-task.component';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  
+
   public taskList: TaskList;
 
   constructor(
