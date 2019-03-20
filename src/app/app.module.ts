@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 import { HomeComponent } from './home/home.component';
 import { NewTaskComponent } from './task-list/new-task/new-task/new-task.component';
+import { TaskListResolver } from './task-list/task-list.resolver';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import { NewTaskComponent } from './task-list/new-task/new-task/new-task.compone
     // Routing module should always be in the end of imports!
     RouterModule.forRoot(routes),
   ],
-  providers: [],
+  providers: [
+    TaskListResolver
+  ],
   entryComponents: [NewTaskComponent],
   bootstrap: [AppComponent]
 })
