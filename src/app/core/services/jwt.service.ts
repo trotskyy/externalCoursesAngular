@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtPayload } from '../models';
+import { fromEvent } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable()
 export class JwtService {
@@ -9,7 +11,15 @@ export class JwtService {
     payload: null as JwtPayload
   };
 
-  constructor(private window: Window) { }
+  constructor(private window: Window) {
+    fromEvent(window, 'storage').pipe(
+      filter(event => (event as StorageEvent).key == 'rawToken'),
+      map(event => (event as StorageEvent).newValue)
+    ).subscribe(newRawToken => {
+      console.log('updated token in memory')
+      this.token.raw = newRawToken;
+    })
+  }
 
   public persistToken(jwtBase64String: string): void {
     this.token.raw = jwtBase64String;
@@ -34,6 +44,10 @@ export class JwtService {
     this.token.payload = null;
     this.token.raw = null;
     this.window.localStorage.removeItem('rawToken');
+  }
+
+  public getTokenPayload(): JwtPayload {
+    return this.fetchToken().payload;
   }
 
   private fetchToken(): { raw: string, payload: JwtPayload } {
@@ -63,7 +77,8 @@ export class JwtService {
       issuedAtMs: +payloadObj.iat * 1000,
       expirationDateMs: +payloadObj.exp * 1000,
       issuer: payloadObj.iss,
-      audience: payloadObj.aud
+      audience: payloadObj.aud,
+      role: payloadObj['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
     };
   }
 }

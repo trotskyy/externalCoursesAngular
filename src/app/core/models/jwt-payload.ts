@@ -1,3 +1,4 @@
+import { Role } from ".";
 
 export interface JwtPayload {
     subjectId: string;
@@ -5,4 +6,5 @@ export interface JwtPayload {
     expirationDateMs: number;
     issuer: string;
     audience: string;
+    role: Role;
 }

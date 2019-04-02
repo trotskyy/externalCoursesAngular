@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="row"><h3>All Users</h3></div>
+  <div *ngFor="let user of users" class="row">
+    <div class="col-5 p-2">{{user.firstName}} {{user.lastName}}</div>
+    <div class="col-5 p-2">{{user.role}}</div>
+    <div class="col-2 p-2"><button class="btn btn-danger" 
+        (click)="deleteUser(user.id)">Delete</button></div>
+  </div>
+</div>

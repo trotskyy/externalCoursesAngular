@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { routes } from './app-routing';
@@ -16,6 +16,10 @@ import { SharedComponentsModule } from './shared-components/shared-components.mo
 import { HomeComponent } from './home/home.component';
 import { TaskListResolver } from './task-list/task-list.resolver';
 import { EditTaskComponent } from './task-list/edit-task/edit-task.component';
+import { AdminModule } from './admin/admin.module';
+import { Observable } from 'rxjs';
+import { User } from './core/models';
+import { CurrentUserInitializingService } from './core/services';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { EditTaskComponent } from './task-list/edit-task/edit-task.component';
     EditTaskComponent
   ],
   imports: [
+    AdminModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialExportsModule,
@@ -38,7 +43,13 @@ import { EditTaskComponent } from './task-list/edit-task/edit-task.component';
     RouterModule.forRoot(routes),
   ],
   providers: [
-    TaskListResolver
+    TaskListResolver,
+    // { 
+    //   provide: APP_INITIALIZER, 
+    //   useFactory: loadCurrentUser, 
+    //   deps: [CurrentUserInitializingService], 
+    //   multi: true 
+    // }    
   ],
   entryComponents: [EditTaskComponent],
   bootstrap: [AppComponent]

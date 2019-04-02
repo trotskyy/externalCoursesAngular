@@ -3,23 +3,33 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
 import { delay, catchError, tap, map } from 'rxjs/operators';
 import { ErrorHandlingService } from './error-handling.service';
-import { User, UserLoginModel } from '../models';
+import { User, UserLoginModel, Role } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { JwtService } from './jwt.service';
+import { CurrentUserInitializingService } from 'src/app/core/services/current-user-initializing.service';
 
 @Injectable()
 export class AuthService {
 
-  private currentUser$ = new BehaviorSubject<User>(null);
+  private currentUser$: BehaviorSubject<User>;
 
-  constructor(private httpClient: HttpClient,
+  constructor(currentUserInitializingService: CurrentUserInitializingService,
+    private httpClient: HttpClient,
     private jwtService: JwtService,
     private errorHandlingService: ErrorHandlingService) {
+
+      this.currentUser$ = new BehaviorSubject(currentUserInitializingService.initialCurrentUser);
   }
 
   public isSignedIn(): Observable<boolean> {
     return this.currentUser$.pipe(
       map(currentUser => !!currentUser)
+    );
+  }
+
+  public getRole(): Observable<Role> {
+    return this.currentUser$.pipe(
+      map(currentUser => currentUser ? currentUser.role : null)
     );
   }
 
@@ -30,8 +40,7 @@ export class AuthService {
 
     return this.httpClient.post<any>(PATH, loginModel).pipe(
       tap(({user, token}) => {
-        this.jwtService.persistToken(token);
-        this.currentUser$.next(user as User);
+        this.handleUserAndToken(user, token);
       }),
       catchError(this.errorHandlingService.handleError)
     );
@@ -46,8 +55,7 @@ export class AuthService {
       lastName: lastName
     }).pipe(
       tap(({user, token}) => {
-        this.jwtService.persistToken(token);
-        this.currentUser$.next(user as User);
+        this.handleUserAndToken(user, token);
       }),
       catchError(this.errorHandlingService.handleError)
     );
@@ -65,6 +73,13 @@ export class AuthService {
 
   public getCurrentUser(): Observable<User> {
     return this.currentUser$.asObservable();
+  }
+
+  private handleUserAndToken(user: User, token: string): void {
+    this.jwtService.persistToken(token);
+    user.role = this.jwtService.getTokenPayload().role;
+    console.log(user)
+    this.currentUser$.next(user);
   }
 
   // public validateLogin(login: string): Observable<boolean> {

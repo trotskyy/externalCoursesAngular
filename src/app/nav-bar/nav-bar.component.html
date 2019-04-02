@@ -8,6 +8,7 @@
     <ng-content *ngIf="isUserSignedIn$ | async; then signedIn; else signedOut">
     </ng-content>
     <ng-template #signedIn>
+      <button mat-button [routerLink]="['admin/user-list']">Admin panel</button>
       <button mat-button (click)="signOut()">Sign out</button>
     </ng-template>
     <ng-template #signedOut>
